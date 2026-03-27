@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Devendra Sai Mulakalapati | Software Engineer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <title>Devendra Sai | 3D Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js" integrity="sha512-RX/OFugIG/bZHFHRnFJU7T/Tcqo7lOB1MzAsJ0iSjEsvqQ4O//0xN3z2ZkWeXGkRzVTXm00sEqpZk8O92R/pMw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
   <style>
     :root {
-      --bg-color: #0d1117;
-      --card-bg: #161b22;
-      --text-main: #c9d1d9;
-      --text-muted: #8b949e;
-      --accent: #58a6ff;
-      --accent-glow: rgba(88, 166, 255, 0.4);
+      --bg-color: #050814;
+      --accent: #00f0ff; /* Neon Cyan */
+      --accent-secondary: #7000ff; /* Deep Purple */
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -21,195 +22,191 @@
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-color);
       color: var(--text-main);
-      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
     }
 
-    /* Navigation */
+    /* Ambient Glowing Background Background */
+    .ambient-light {
+      position: fixed;
+      top: 50%; left: 50%;
+      width: 100vw; height: 100vh;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 20% 30%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(0, 240, 255, 0.1) 0%, transparent 40%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Floating Navigation */
     nav {
       position: fixed;
-      top: 0; width: 100%;
-      background: rgba(13, 17, 23, 0.9);
-      backdrop-filter: blur(10px);
-      padding: 20px 5%;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 15px 40px;
+      border-radius: 50px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      gap: 30px;
       z-index: 1000;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    nav a { color: var(--text-main); text-decoration: none; margin-left: 20px; font-weight: 600; transition: color 0.3s; }
-    nav a:hover { color: var(--accent); }
-    .logo { font-weight: 800; font-size: 1.2rem; color: var(--accent); }
+    nav a { color: var(--text-main); text-decoration: none; font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    nav a:hover { color: var(--accent); text-shadow: 0 0 10px var(--accent); }
 
-    /* Hero Section */
+    /* Hero Section with Floating Animation */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 0 10%;
-      padding-top: 80px;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+      padding: 0 5%;
+      position: relative;
     }
-    .greeting { color: var(--accent); font-weight: 600; font-size: 1.2rem; margin-bottom: 10px; }
-    .name { font-size: 4.5rem; font-weight: 800; color: #ffffff; line-height: 1.1; margin-bottom: 20px; }
-    .title { font-size: 2rem; color: var(--text-muted); margin-bottom: 20px; }
-    .summary { max-width: 650px; font-size: 1.1rem; margin-bottom: 30px; }
+    .floating-element { animation: float 6s ease-in-out infinite; }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
     
-    .stats { display: flex; gap: 30px; margin-bottom: 40px; }
-    .stat-item { border-left: 2px solid var(--accent); padding-left: 15px; }
-    .stat-item strong { display: block; font-size: 1.5rem; color: #fff; }
-    
+    .hero h1 { font-size: 5rem; font-weight: 900; background: linear-gradient(45deg, var(--accent), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; margin-bottom: 20px; }
+    .hero p.subtitle { font-size: 1.5rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px auto; }
+
+    /* 3D Buttons */
     .btn {
-      display: inline-block; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s ease; cursor: pointer;
+      padding: 15px 35px; border-radius: 30px; text-decoration: none; font-weight: 700; letter-spacing: 1px;
+      transition: all 0.3s ease; display: inline-block; position: relative; overflow: hidden; z-index: 1;
     }
-    .btn-primary { background-color: var(--accent); color: #0d1117; box-shadow: 0 4px 15px var(--accent-glow); margin-right: 15px; }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-glow); }
-    .btn-secondary { border: 1px solid var(--accent); color: var(--accent); }
-    .btn-secondary:hover { background: rgba(88, 166, 255, 0.1); }
+    .btn-primary {
+      background: transparent; color: var(--accent); border: 2px solid var(--accent);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 0 15px rgba(0, 240, 255, 0.1);
+    }
+    .btn-primary:hover {
+      background: var(--accent); color: #000; box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); transform: scale(1.05);
+    }
 
     /* Sections */
-    section { padding: 100px 10%; }
-    .section-title { font-size: 2.5rem; color: #fff; margin-bottom: 40px; display: flex; align-items: center; }
-    .section-title::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.1); margin-left: 20px; }
+    section { padding: 120px 10%; position: relative; }
+    .section-title { font-size: 3rem; font-weight: 800; text-align: center; margin-bottom: 60px; color: #fff; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 
-    /* Cards */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    .card {
-      background: var(--card-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 30px; transition: transform 0.3s ease, border-color 0.3s;
-    }
-    .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-    .card h3 { color: #fff; font-size: 1.4rem; margin-bottom: 5px; }
-    .card h4 { color: var(--accent); font-weight: 400; margin-bottom: 15px; font-size: 1rem; }
+    /* 3D Glassmorphism Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; perspective: 1000px; }
     
-    /* Tech Tags */
-    .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
-    .tag { background: rgba(88, 166, 255, 0.1); color: var(--accent); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px 30px;
+      backdrop-filter: blur(10px);
+      transform-style: preserve-3d; /* CRITICAL FOR 3D POP */
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    
+    /* This makes the content POP OUT towards the user when hovering */
+    .card-content { transform: translateZ(60px); }
+    
+    .card h3 { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }
+    .card h4 { font-size: 1rem; color: var(--accent); margin-bottom: 20px; font-weight: 400; }
+    .card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 20px; }
 
-    /* Animations */
-    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    /* Floating Tech Tags */
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; transform: translateZ(40px); }
+    .tag { background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); color: var(--accent); padding: 6px 15px; border-radius: 30px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
-    /* Footer */
-    footer { text-align: center; padding: 50px 10%; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
-    .contact-links a { color: var(--accent); text-decoration: none; margin: 0 15px; font-size: 1.1rem; }
-    .contact-links a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
 
+  <div class="ambient-light"></div>
+
   <nav>
-    <div class="logo">DSM.</div>
-    <div>
-      <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </div>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
   </nav>
 
   <header class="hero">
-    <p class="greeting">Hi, I am</p>
-    <h1 class="name">Devendra Sai<br>Mulakalapati.</h1>
-    <h2 class="title">Software Engineer</h2>
-    <p class="summary">
-      I build <strong>cloud-native systems</strong>, microservices architectures, and scalable full-stack applications. With 3+ years of experience, I specialize in turning complex requirements into fast, production-ready products.
-    </p>
-    <div class="stats">
-      <div class="stat-item"><strong>3+</strong> Years Exp</div>
-      <div class="stat-item"><strong>8+</strong> REST APIs</div>
-      <div class="stat-item"><strong>40%</strong> Perf. Gain</div>
-    </div>
-    <div>
-      <a href="#contact" class="btn btn-primary">Let's Connect</a>
-      <a href="https://linkedin.com/in/devendrasai" target="_blank" class="btn btn-secondary">LinkedIn</a>
+    <div class="floating-element">
+      <p style="color: var(--accent); font-weight: 700; margin-bottom: 15px; font-size: 1.2rem; letter-spacing: 2px;">HELLO, I AM</p>
+      <h1>Devendra Sai<br>Mulakalapati</h1>
+      <p class="subtitle">Cloud-Native Software Engineer crafting scalable architectures and immersive digital experiences.</p>
+      <a href="#contact" class="btn btn-primary">INITIATE CONTACT</a>
     </div>
   </header>
 
-  <section id="experience" class="fade-in">
-    <h2 class="section-title">Where I've Worked</h2>
-    
-    <div class="card" style="margin-bottom: 20px;">
-      <h3>Software Developer</h3>
-      <h4>Thought Byte, Inc · Nutley, NJ | Feb 2024 – May 2024</h4>
-      <p>Re-architected a monolithic platform into independent Java microservices, containerized with Docker and deployed on AWS EC2. Built an event-driven pipeline with Apache Kafka and Redis.</p>
-      <ul style="margin: 15px 0 0 20px; color: var(--text-muted);">
-        <li>Slashed deployment time by <strong>40%</strong>.</li>
-        <li>Delivered a <strong>40% boost</strong> in API response performance.</li>
-      </ul>
-      <div class="tags">
-        <span class="tag">Java</span><span class="tag">AWS EC2</span><span class="tag">Docker</span><span class="tag">Kafka</span><span class="tag">Redis</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Software Engineer</h3>
-      <h4>Mindtree Ltd · Bengaluru, India | Jun 2021 – Jul 2022</h4>
-      <p>Contributed to enterprise-grade systems processing real-time data. Designed Kafka-based messaging architectures and connective RESTful APIs. Took full ownership of containerizing and deploying workloads on cloud infrastructures.</p>
-      <div class="tags">
-        <span class="tag">Java</span><span class="tag">Python</span><span class="tag">GCP</span><span class="tag">Kubernetes</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="fade-in">
-    <h2 class="section-title">Featured Projects</h2>
+  <section id="experience">
+    <h2 class="section-title">Career Orbit</h2>
     <div class="grid">
       
-      <div class="card">
-        <h3>GuiDAR 🦮</h3>
-        <h4>iOS Virtual Guide Dog</h4>
-        <p>A real-time navigation iPhone app using the built-in LiDAR sensor for live obstacle detection for the visually impaired. Detects objects within 15 feet and provides audio/vibration feedback.</p>
-        <div class="tags">
-          <span class="tag">Swift</span><span class="tag">LiDAR</span><span class="tag">CoreML</span><span class="tag">Node.js</span>
+      <div class="card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+        <div class="card-content">
+          <h3>Thought Byte, Inc.</h3>
+          <h4>Software Developer | 2024</h4>
+          <p>Re-architected a monolithic platform into independent Java microservices on AWS EC2. Built an event-driven pipeline slashing deployment time by 40%.</p>
+          <div class="tags">
+            <span class="tag">Java</span><span class="tag">AWS</span><span class="tag">Docker</span><span class="tag">Kafka</span>
+          </div>
         </div>
       </div>
 
-      <div class="card">
-        <h3>Hospital Management</h3>
-        <h4>Full-stack Application</h4>
-        <p>Designed a fully functional system managing the complete lifecycle of hospital operations, including patient records, scheduling, and billing, reducing manual data entry errors.</p>
-        <div class="tags">
-          <span class="tag">Java</span><span class="tag">SQL</span><span class="tag">JDBC</span><span class="tag">Java Swing</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>High-Perf Directory</h3>
-        <h4>Algorithm Optimization</h4>
-        <p>Built a high-performance telephone directory tackling fast data lookup. Achieved a 40% reduction in retrieval latency using custom hash table implementations.</p>
-        <div class="tags">
-          <span class="tag">C++</span><span class="tag">Data Structures</span><span class="tag">Algorithms</span>
+      <div class="card" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+        <div class="card-content">
+          <h3>Mindtree Ltd.</h3>
+          <h4>Software Engineer | 2021 – 2022</h4>
+          <p>Designed Kafka-based messaging architectures processing real-time enterprise data. Deployed containerized workloads across GCP and Kubernetes.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">GCP</span><span class="tag">Kubernetes</span><span class="tag">REST APIs</span>
+          </div>
         </div>
       </div>
 
     </div>
   </section>
 
-  <section id="contact" class="fade-in">
-    <h2 class="section-title">Get In Touch</h2>
-    <p style="margin-bottom: 30px; font-size: 1.1rem;">I'm currently open to full-time opportunities. If you're building something interesting, I'd love to hear about it.</p>
-    <a href="mailto:mulakalapatid@gmail.com" class="btn btn-primary">Say Hello</a>
+  <section id="projects">
+    <h2 class="section-title">Engineering Feats</h2>
+    <div class="grid">
+      
+      <div class="card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+        <div class="card-content">
+          <h3>GuiDAR 🦮</h3>
+          <h4>iOS Virtual Guide Dog</h4>
+          <p>A real-time navigation app utilizing iPhone Pro's LiDAR sensor for live obstacle detection and spatial mapping for the visually impaired.</p>
+          <div class="tags">
+            <span class="tag">Swift</span><span class="tag">LiDAR</span><span class="tag">CoreML</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+        <div class="card-content">
+          <h3>High-Perf Directory</h3>
+          <h4>Algorithmic Optimization</h4>
+          <p>Engineered a high-speed data lookup system using custom hash tables with quadratic probing, reducing retrieval latency by 40%.</p>
+          <div class="tags">
+            <span class="tag">C++</span><span class="tag">Data Structures</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
-  <footer>
-    <div class="contact-links" style="margin-bottom: 20px;">
-      <a href="mailto:mulakalapatid@gmail.com">mulakalapatid@gmail.com</a>
-      <a href="https://linkedin.com/in/devendrasai" target="_blank">LinkedIn</a>
-      <a href="tel:+17048905606">+1 (704) 890-5606</a>
-    </div>
-    <p style="color: var(--text-muted); font-size: 0.9rem;">© 2026 Devendra Sai Mulakalapati. Built with clean code.</p>
-  </footer>
+  <section id="contact" style="text-align: center; padding-bottom: 50px;">
+    <h2 class="section-title">Ready to Launch?</h2>
+    <a href="mailto:mulakalapatid@gmail.com" class="btn btn-primary" style="margin-right: 20px;">Email Me</a>
+    <a href="https://linkedin.com/in/devendrasai" target="_blank" class="btn btn-primary" style="border-color: var(--accent-secondary); color: var(--accent-secondary);">LinkedIn</a>
+  </section>
 
   <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.fade-in').forEach((el) => {
-      observer.observe(el);
+    VanillaTilt.init(document.querySelectorAll(".card"), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.2,
+      perspective: 1000
     });
   </script>
 </body>
